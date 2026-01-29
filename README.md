@@ -1,7 +1,16 @@
 # JSec
 JavaScript and HTML Security Analysis using Semgrep and Trufflehog
 
-## How to run
+## Installation
+
+````
+git clone https://github.com/l4rm4nd/JSec && cd JSec
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+````
+
+## Usage
 
 ````
 usage: jsec.py [-h] --url URL [--output OUTPUT] [--depth DEPTH] [--skip-semgrep] [--skip-trufflehog]
