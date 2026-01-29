@@ -1,0 +1,62 @@
+rules:
+  - id: js-hardcoded-secret
+    message: Hardcoded credential-like value in JS/TS
+    languages: [javascript, typescript]
+    severity: WARNING
+
+    patterns:
+      - pattern-either:
+          # object properties (identifier keys)
+          - pattern: '{ ..., password: "$VAL", ... }'
+          - pattern: "{ ..., password: '$VAL', ... }"
+          - pattern: '{ ..., secret: "$VAL", ... }'
+          - pattern: "{ ..., secret: '$VAL', ... }"
+          - pattern: '{ ..., token: "$VAL", ... }'
+          - pattern: "{ ..., token: '$VAL', ... }"
+          - pattern: '{ ..., apiKey: "$VAL", ... }'
+          - pattern: "{ ..., apiKey: '$VAL', ... }"
+          - pattern: '{ ..., clientSecret: "$VAL", ... }'
+          - pattern: "{ ..., clientSecret: '$VAL', ... }"
+          - pattern: '{ ..., accessKey: "$VAL", ... }'
+          - pattern: "{ ..., accessKey: '$VAL', ... }"
+          - pattern: '{ ..., privateKey: "$VAL", ... }'
+          - pattern: "{ ..., privateKey: '$VAL', ... }"
+
+          # object properties (string keys)
+          - pattern: '{ ..., "password": "$VAL", ... }'
+          - pattern: "{ ..., 'password': '$VAL', ... }"
+          - pattern: '{ ..., "secret": "$VAL", ... }'
+          - pattern: "{ ..., 'secret': '$VAL', ... }"
+          - pattern: '{ ..., "token": "$VAL", ... }'
+          - pattern: "{ ..., 'token': '$VAL', ... }"
+
+          # assignments
+          - pattern: 'password = "$VAL"'
+          - pattern: "password = '$VAL'"
+          - pattern: '$OBJ.password = "$VAL"'
+          - pattern: "$OBJ.password = '$VAL'"
+          - pattern: '$OBJ["password"] = "$VAL"'
+          - pattern: "$OBJ['password'] = '$VAL'"
+
+      - metavariable-regex:
+          metavariable: $VAL
+          regex: |
+            (?isx)
+            (?!\s*$)
+            (?!changeme|change_me|password|passw0rd|example|sample|demo|test|testing|dummy|null|undefined|\*{3,}|x{3,})
+            .{4,}
+
+    pattern-not-either:
+      - pattern: 'password = process.env.$ENV'
+      - pattern: 'password = process.env[$ENV]'
+      - pattern: 'password: process.env.$ENV'
+      - pattern: 'password: process.env[$ENV]'
+      - pattern: 'password = import.meta.env.$ENV'
+      - pattern: 'password: import.meta.env.$ENV'
+
+    metadata:
+      category: security
+      confidence: HIGH
+      likelihood: MEDIUM
+      impact: HIGH
+
