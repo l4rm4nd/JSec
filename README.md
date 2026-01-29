@@ -8,6 +8,7 @@ git clone https://github.com/l4rm4nd/JSec && cd JSec
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
+npm install -g js-beautify
 ````
 
 ## Usage
