@@ -38,5 +38,6 @@ Requirements:
   - js-beautify (npm install -g js-beautify)
   - docker (for Semgrep and TruffleHog)
   - Python packages: selenium, beautifulsoup4, requests, tldextract
-
 ````
+
+Finally inspect `trufflehog/trufflehog_results.json` and `semgrep/semgrep_report.txt` for results.
